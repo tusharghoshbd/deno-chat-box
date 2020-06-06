@@ -10,13 +10,13 @@
     <div class="container">
         <h1 class="display-4">Send Message</h1>
         <div class="row">
-            <div class="col col-md-2">
+            <div class="col col-md-2 col-xs-3">
                 <input id="name" class="form-control" placeholder="Name" >
             </div>
-            <div class="col col-md-8">
+            <div class="col col-md-8 col-xs-7">
                 <input id="message" class="form-control" placeholder="Your Message Here">
             </div>
-            <div class="col col-md-2">
+            <div class="col col-md-2 col-xs-2">
                 <button id="send" class="btn btn-success">Send</button>
             </div>
         </div>
@@ -42,15 +42,19 @@
         };
 
         $("#send").click(() => {
-            if ($("#name").val() != "") {
-                console.log("send");
-                sendMessage({
-                    name: $("#name").val(),
-                    message: $("#message").val()
-                });
+            if ($("#name").val().trim() != "") {
+                if($("#message").val().trim() !=""){
+                    sendMessage({
+                        name: $("#name").val(),
+                        message: $("#message").val()
+                    });
+                }
+                else{
+                    alert("Please enter your message");
+                }
             }
             else {
-                alert("Please enter your name")
+                alert("Please enter your name");
             }
         })
 
@@ -64,6 +68,7 @@
 
     function sendMessage(message) {
         ws.send(JSON.stringify({ event: "message", data: message }));
+        $("#message").val("");
     }
 
 </script>
